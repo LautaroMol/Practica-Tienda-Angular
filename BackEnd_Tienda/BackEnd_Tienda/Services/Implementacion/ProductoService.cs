@@ -1,5 +1,6 @@
 ﻿using BackEnd_Tienda.Models;
 using BackEnd_Tienda.Services.Carga;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd_Tienda.Services.Implementacion
 {
@@ -11,30 +12,53 @@ namespace BackEnd_Tienda.Services.Implementacion
         {
             _dbContext = dbContext;
         }
-
-        public Task<Producto> Add(Producto modelo)
+        public async Task<Producto> GetId(int idProducto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Producto? encontrado = new Producto();
+                encontrado = await _dbContext.Productos.Where(e => e.IdProducto == idProducto).FirstOrDefaultAsync();
+                return encontrado;
+            }catch (Exception ex) { throw ex; }
         }
 
-        public Task<bool> Delete(Producto modelo)
+        public async Task<List<Producto>> GetList()
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<Producto> list = new List<Producto>();
+                list = await _dbContext.Productos.ToListAsync();
+                return list;
+            }catch(Exception ex) { throw ex; }
+        }
+        public async Task<Producto> Add(Producto modelo)
+        {
+            try
+            {
+                _dbContext.Productos.Add(modelo);
+                await _dbContext.SaveChangesAsync();
+                return modelo;
+            }catch (Exception ex) { throw ex; } 
         }
 
-        public Task<Producto> GetId(int idProducto)
+        public async Task<bool> Delete(Producto modelo)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbContext.Productos.Remove(modelo);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }catch (Exception ex) { throw ex; }
         }
 
-        public Task<List<Producto>> GetList()
+        public async Task<bool> Update(Producto modelo)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Update(Producto modelo)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                _dbContext.Productos.Update(modelo);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }catch (Exception ex) { throw ex; }
         }
     }
 }

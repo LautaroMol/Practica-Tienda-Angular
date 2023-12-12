@@ -74,3 +74,5 @@ D:\angular\Tienda\BackEnd_Tienda\BackEnd_Tienda\obj\Debug\net7.0\refint\BackEnd_
 D:\angular\Tienda\BackEnd_Tienda\BackEnd_Tienda\obj\Debug\net7.0\BackEnd_Tienda.pdb
 D:\angular\Tienda\BackEnd_Tienda\BackEnd_Tienda\obj\Debug\net7.0\BackEnd_Tienda.genruntimeconfig.cache
 D:\angular\Tienda\BackEnd_Tienda\BackEnd_Tienda\obj\Debug\net7.0\ref\BackEnd_Tienda.dll
+D:\angular\Tienda\BackEnd_Tienda\BackEnd_Tienda\bin\Debug\net7.0\AutoMapper.dll
+D:\angular\Tienda\BackEnd_Tienda\BackEnd_Tienda\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
