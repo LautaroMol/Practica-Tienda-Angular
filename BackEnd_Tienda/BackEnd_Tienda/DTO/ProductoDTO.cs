@@ -13,9 +13,8 @@ namespace BackEnd_Tienda.DTO
         public string? Descripcion { get; set; }
 
         public int? Ventas { get; set; }
-
-        public virtual Tipo? CodTipoNavigation { get; set; }
-        public string? Categoria { get; set; }
+        public int CodTipo { get; set; }
+        public string Categoria { get; set; }
         public string CategoriaDescrip { get; set; }
 
     }

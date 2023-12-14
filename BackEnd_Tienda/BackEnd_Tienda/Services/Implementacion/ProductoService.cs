@@ -27,7 +27,7 @@ namespace BackEnd_Tienda.Services.Implementacion
             try
             {
                 List<Producto> list = new List<Producto>();
-                list = await _dbContext.Productos.ToListAsync();
+                list = await _dbContext.Productos.Include(dpt => dpt.CodTipoNavigation).ToListAsync();
                 return list;
             }catch(Exception ex) { throw ex; }
         }

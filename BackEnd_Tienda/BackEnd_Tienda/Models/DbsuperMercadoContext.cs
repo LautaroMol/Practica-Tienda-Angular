@@ -19,11 +19,15 @@ public partial class DbsuperMercadoContext : DbContext
 
     public virtual DbSet<Tipo> Tipos { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=(localdb)\\Local;Database=DBSuperMercado;Trusted_Connection=True; TrustServerCertificate=True");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Producto>(entity =>
         {
-            entity.HasKey(e => e.IdProducto).HasName("PK__Producto__0988921043180335");
+            entity.HasKey(e => e.IdProducto).HasName("PK__Producto__098892101C9DE082");
 
             entity.ToTable("Producto");
 
@@ -36,7 +40,7 @@ public partial class DbsuperMercadoContext : DbContext
 
             entity.HasOne(d => d.CodTipoNavigation).WithMany(p => p.Productos)
                 .HasForeignKey(d => d.CodTipo)
-                .HasConstraintName("FK__Producto__CodTip__3C69FB99");
+                .HasConstraintName("FK__Producto__CodTip__4CA06362");
         });
 
         modelBuilder.Entity<Tipo>(entity =>
