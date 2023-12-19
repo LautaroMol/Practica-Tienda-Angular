@@ -52,7 +52,7 @@ var summaries = new[]
 };
 #region peticiones
 
-app.MapGet("/tipo/lista", async (
+app.MapGet("tipo/lista", async (
     ITipoService _tipoService,
     IMapper _mapper) =>
 {
@@ -63,7 +63,7 @@ app.MapGet("/tipo/lista", async (
     else return Results.NotFound();
 });
 
-app.MapGet("/producto/lista", async (
+app.MapGet("producto/lista", async (
     IProductoService _productoServicio,
     IMapper _mapper) =>
 {

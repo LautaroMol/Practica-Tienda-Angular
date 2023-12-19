@@ -1,19 +1,22 @@
-<mat-card class="example-card">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-  <mat-card-content>
-    <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
-</mat-card>
+
+
+<div class="button-container">
+  <div class="card-container">
+    <mat-card class="cardBut" id="animatedCard" (click)="navigateTo('/venta')">
+      <img src="../assets/icons8-cart.gif" id="animatedIcon" class="hidden">
+      <div class="card-text">
+        <h5 class="card-title">Venta</h5>
+        <p class="card-description">Vende productos a tus clientes.</p>
+      </div>
+    </mat-card>
+    <mat-card class="cardButRestock" id="animatedCard" (click)="navigateTo('/reposicion')">
+      <img src="../assets/icons8-todo-list.gif" id="animatedIconRestock" class="animatedIconRestock">
+      <div class="card-text">
+        <h5 class="card-title">Restocking</h5>
+        <p class="card-description">Recarga y modifica el stock de productos en tu tienda.</p>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
