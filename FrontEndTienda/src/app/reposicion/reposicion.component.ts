@@ -7,19 +7,24 @@ import { OnInit } from '@angular/core';
 import { Producto } from '../interfaces/producto';
 import { ProductoService } from '../Services/producto.service';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http'; 
+import { MatIconModule } from '@angular/material/icon';
+import {MatDialogActions,MatDialogClose,MatDialogContent,MatDialogTitle,MatDialog} from '@angular/material/dialog';
+import { ProductoAddEditComponent } from '../Dialogs/producto-add-edit/producto-add-edit.component';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'app-reposicion',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule,MatFormFieldModule,MatInputModule,HttpClientModule],
+  imports: [MatTableModule, MatPaginatorModule,MatFormFieldModule,MatInputModule,HttpClientModule,MatIconModule,MatDialogActions,
+    MatDialogClose,MatDialogContent,MatDialogTitle,MatButtonModule],
   templateUrl: './reposicion.component.html',
   styleUrl: './reposicion.component.css'
 })
 export class ReposicionComponent implements AfterViewInit, OnInit {
   constructor(
     private _productoServicio: ProductoService,
-    private _httpClient: HttpClient
+    public dialog: MatDialog
   ){
     this.producto = {} as Producto;
   }
@@ -36,17 +41,16 @@ export class ReposicionComponent implements AfterViewInit, OnInit {
   }
 
   mostrarProductos(){
-    this._productoServicio.getList().subscribe(
-      (productos: Producto[]) => {
-        this.listaProductos = productos;
-        console.log(this.listaProductos);
-    },(error)=>{ 
-      console.error('Error al obtener lista', error)
+    this._productoServicio.getList().subscribe({
+        next:(dataResponse) => {
+          this.dataSource.data = dataResponse;
+        },error:(e)=>{ 
+      (e);}
     })
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.mostrarProductos();
   }
 
   applyFilter(event: Event) {
@@ -57,34 +61,12 @@ export class ReposicionComponent implements AfterViewInit, OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-}
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+  DialogoNuevoProducto() {
+    this.dialog.open(ProductoAddEditComponent);
+  }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];
+  editarProducto(){}
+
+  cancelarEdicion(){}
+}

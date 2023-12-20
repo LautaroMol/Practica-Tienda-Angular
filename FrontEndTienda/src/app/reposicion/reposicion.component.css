@@ -9,3 +9,22 @@ table {
   td, th {
     width: 25%;
   }
+  .example-button-container {
+    display: flex;
+    gap: 8px; /* Ajusta el espacio entre los botones según sea necesario */
+  }
+  
+  .action-button {
+    background-color: transparent !important; /* Elimina el fondo del cuadro del botón */
+    box-shadow: none !important; /* Elimina la sombra del cuadro del botón */
+    border: none;
+    transition: transform 0.2s; /* Agrega una transición */
+
+  /* Escala normal */
+  transform: scale(1);
+  }
+  .action-button:hover,
+.action-button:active {
+  transform: scale(2.5);
+}
+  
