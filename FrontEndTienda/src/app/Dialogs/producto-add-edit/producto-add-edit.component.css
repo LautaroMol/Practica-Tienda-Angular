@@ -1,0 +1,8 @@
+.producto-form {
+    width: 400px; /* Ajusta el ancho */
+  }
+  
+  mat-dialog-content {
+    max-width: 100%; /* Ajusta el ancho  */
+  }
+  

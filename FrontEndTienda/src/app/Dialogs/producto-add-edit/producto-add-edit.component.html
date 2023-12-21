@@ -1,5 +1,31 @@
-<h1 mat-dialog-title>Dialog with elements</h1>
-<div mat-dialog-content>This dialog showcases the title, close, content and actions elements.</div>
+<h1 mat-dialog-title>{{tituloAccion}} Producto</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formProducto" class="producto-form">
+    <mat-grid-list cols="1" rowHeight="80px">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre Del Producto</mat-label>
+          <input matInput formControlName="nombreCompleto">
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <h4>Selección de categoría</h4>
+        <mat-form-field>
+          <mat-select formControlName="codTipo">
+            <mat-option *ngFor="let item of listaCategorias" [value]="item.CodTipo">
+              {{item.Nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p>Seleccionado: {{ formProducto.get('codTipo') }}</p>        
+      </mat-grid-tile>
+
+      <mat-grid-tile></mat-grid-tile>
+      <mat-grid-tile></mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>
 </div>
