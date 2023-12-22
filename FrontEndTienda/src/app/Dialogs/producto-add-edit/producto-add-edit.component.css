@@ -1,8 +1,13 @@
 .producto-form {
-    width: 400px; /* Ajusta el ancho */
-  }
-  
-  mat-dialog-content {
-    max-width: 100%; /* Ajusta el ancho  */
-  }
-  
+  width: 300px; /* Ajusta el ancho del formulario al 100% */
+  margin: auto; /* Centra el formulario en el medio */
+}
+
+mat-dialog-content {
+  max-width: none; /* No establece un ancho máximo para el contenido */
+}
+
+mat-form-field {
+  width: 100%; /* Ajusta el ancho del campo al 100% del contenedor */
+  margin: 16px; /* Añade espacio entre los campos, ajusta según sea necesario */
+}
