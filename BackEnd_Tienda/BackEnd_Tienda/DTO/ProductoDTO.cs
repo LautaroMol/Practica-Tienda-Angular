@@ -4,6 +4,7 @@ namespace BackEnd_Tienda.DTO
 {
     public class ProductoDTO
     {
+        public int idProducto { get; set; }
         public string? Nombre { get; set; }
 
         public int? Precio { get; set; }

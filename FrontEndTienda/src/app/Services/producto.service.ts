@@ -20,7 +20,7 @@ export class ProductoService {
       return this.http.post<Producto>(`${this.apiUrl}guardar`,modelo);
     }
 
-    update(modelo:Producto,idProducto:number):Observable<Producto>{
+    update(idProducto:number,modelo:Producto):Observable<Producto>{
       return this.http.put<Producto>(`${this.apiUrl}actualizar/${idProducto}`,modelo);
     }
     delete(idProducto:number):Observable<void>{

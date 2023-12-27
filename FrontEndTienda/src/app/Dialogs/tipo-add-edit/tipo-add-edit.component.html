@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>{{tituloAccion}} Categoria</h1>
+<div mat-Dialog-Content>
+    <form [formGroup]="formTipo" class="tipo-form">
+        <mat-grid-list cols="1" rowHeight="80px">
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Codigo De la Categoria</mat-label>
+                    <input matInput formControlName="codTipo">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre de la Categoria</mat-label>
+                    <input matInput formControlName="nombre">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Descripcion de la categoria</mat-label>
+                    <textarea matInput formControlName="descripcion" placeholder="Describa la categoria"></textarea>
+                </mat-form-field>
+            </mat-grid-tile>
+
+        </mat-grid-list>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close color="warn">Cerrar</button>
+    <button mat-raised-button color="primary"
+    (click)="addEditTipo()"
+    [disabled]="formTipo.invalid">{{botonAccion}}</button>
+</div>

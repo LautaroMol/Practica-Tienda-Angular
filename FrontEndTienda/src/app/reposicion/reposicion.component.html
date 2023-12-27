@@ -6,76 +6,126 @@
     <div class="mat-elevation-z8">
       
       
-        <mat-form-field>
-            <mat-label>Filtrado</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Inserte nombre o Categoria" #input>
-          </mat-form-field>
+      <mat-form-field>
+        <mat-label>Filtrado</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Inserte nombre o Categoria" #input>
+      </mat-form-field>
 
-          <table mat-table [dataSource]="dataSource">
-            <!-- Nombre Column -->
-            <ng-container matColumnDef="Nombre">
-              <th mat-header-cell *matHeaderCellDef> Nombre </th>
-              <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-            </ng-container>
-      
-            <!-- Precio Column -->
-            <ng-container matColumnDef="Precio">
-              <th mat-header-cell *matHeaderCellDef> Precio </th>
-              <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
-            </ng-container>
-      
-            <!-- Stock Column -->
-            <ng-container matColumnDef="Stock">
-              <th mat-header-cell *matHeaderCellDef> Stock </th>
-              <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
-            </ng-container>
+      <table mat-table [dataSource]="dataSource">
+        <!-- Nombre Columna -->
+        <ng-container matColumnDef="Nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+  
+        <!-- Precio Columna -->
+        <ng-container matColumnDef="Precio">
+          <th mat-header-cell *matHeaderCellDef> Precio </th>
+          <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+        </ng-container>
+  
+        <!-- Stock Columna -->
+        <ng-container matColumnDef="Stock">
+          <th mat-header-cell *matHeaderCellDef> Stock </th>
+          <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+        </ng-container>
 
-            <ng-container matColumnDef="Ventas">
-              <th mat-header-cell *matHeaderCellDef> Ventas </th>
-              <td mat-cell *matCellDef="let element"> {{element.ventas}} </td>
-            </ng-container>
-      
-            <!-- Descripcion Column -->
-            <ng-container matColumnDef="Descripcion">
-              <th mat-header-cell *matHeaderCellDef> Descripcion </th>
-              <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
-            </ng-container>
+        <ng-container matColumnDef="Ventas">
+          <th mat-header-cell *matHeaderCellDef> Ventas </th>
+          <td mat-cell *matCellDef="let element"> {{element.ventas}} </td>
+        </ng-container>
+  
+        <!-- Descripcion Columna -->
+        <ng-container matColumnDef="Descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+          <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+        </ng-container>
 
-            <ng-container matColumnDef="Codigo de categoria">
-              <th mat-header-cell *matHeaderCellDef> Cod. de categoria </th>
-              <td mat-cell *matCellDef="let element"> {{element.codTipo}} </td>
-            </ng-container>
-      
-            <!-- Categoria Column -->
-            <ng-container matColumnDef="Categoria">
-              <th mat-header-cell *matHeaderCellDef> Categoria </th>
-              <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
-            </ng-container>
-      
-            <ng-container matColumnDef="Acciones">
-              <th mat-header-cell *matHeaderCellDef> Acciones </th>
-              <td mat-cell *matCellDef="let element">
-                <div class="example-button-container">
-                  <!-- Botón de Editar -->
-                  <button mat-mini-fab color="primary" aria-label="Editar" (click)="editarProducto()" class="action-button">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  
-                  <!-- Botón de Cancelar -->
-                  <button mat-mini-fab color="warn" aria-label="Cancelar" (click)="cancelarEdicion()" class="action-button">
-                    <mat-icon>cancel</mat-icon>
-                  </button>
-                </div>
-              </td>
-            </ng-container>
-            
+        <ng-container matColumnDef="Codigo de categoria">
+          <th mat-header-cell *matHeaderCellDef> Cod. de categoria </th>
+          <td mat-cell *matCellDef="let element"> {{element.codTipo}} </td>
+        </ng-container>
+  
+        <!-- Categoria Columna -->
+        <ng-container matColumnDef="Categoria">
+          <th mat-header-cell *matHeaderCellDef> Categoria </th>
+          <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="example-button-container">
+              <!-- Botón de Editar -->
+              <button mat-icon-button color="primary" aria-label="Editar" (click)="DialogoEditarProducto(element)" class="action-button">
+                <mat-icon>edit</mat-icon>
+              </button>
+              
+              <!-- Botón de Cancelar -->
+              <button mat-icon-button color="warn" aria-label="Cancelar" (click)="dialogoBorrarProducto()" class="action-button">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+        
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-          
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of elementos"></mat-paginator>
-          
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20,3]"
+      showFirstLastButtons aria-label="Seleccione la pagina de productos"></mat-paginator>
+
+
+          <button mat-button (click)="DialogoNuevaCategoria()">Agregar Nueva Categoría</button>
+
+          <div class="mat-elevation-z8" style="margin-top: 20px;">
+            <mat-form-field>
+              <mat-label>Filtrado de Categorías</mat-label>
+              <input matInput (keyup)="applyFilterTipo($event)" placeholder="Inserte nombre o Descripción" #categoriaInput>
+            </mat-form-field>
+        
+            <table mat-table [dataSource]="dataSourceTipo">
+              <!-- Columnas para categorías -->
+              <ng-container matColumnDef="codTipo">
+                <th mat-header-cell *matHeaderCellDef> Código de Categoría </th>
+                <td mat-cell *matCellDef="let element"> {{element.codTipo}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="descripcionTipo">
+                <th mat-header-cell *matHeaderCellDef> Descripción </th>
+                <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let element">
+                  <div class="example-button-container">
+                    <!-- Botón de Editar -->
+                    <button mat-icon-button color="primary" aria-label="Editar" (click)="editarCategoria(element)" class="action-button">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+        
+                    <!-- Botón de Cancelar -->
+                    <button mat-icon-button color="warn" aria-label="Cancelar" (click)="cancelarEdicionCategoria()" class="action-button">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+        
+              <tr mat-header-row *matHeaderRowDef="['codTipo', 'nombre', 'descripcionTipo', 'acciones']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['codTipo', 'nombre', 'descripcionTipo', 'acciones']"></tr>
+            </table>
+            <mat-paginator #paginatorTipo [pageSizeOptions]="[5, 10, 20, 3]"
+            showFirstLastButtons aria-label="Seleccione la página de categorías"/>
+        
+          </div>
       </div>
       
 </div>

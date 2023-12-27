@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import {MatDialogActions,MatDialogClose,MatDialogContent,MatDialogTitle,MatDialog} from '@angular/material/dialog';
-import { FormBuilder,FormGroup,Validators,ReactiveFormsModule,FormControl } from '@angular/forms';
+import {MatDialogActions,MatDialogClose,MatDialogContent,MatDialogTitle,MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { FormBuilder,FormGroup,Validators,ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Producto } from '../../interfaces/producto';
@@ -11,10 +11,9 @@ import { TipoService } from '../../Services/tipo.service';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectChange, MatSelectModule} from '@angular/material/select';
+import {MatSelectModule} from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import { ALL } from 'dns';
 
 
 
@@ -42,6 +41,7 @@ export class ProductoAddEditComponent implements OnInit{
     private _snackBar: MatSnackBar,
     public _tipoServicio: TipoService,
     private _productoServicio: ProductoService,
+    @Inject (MAT_DIALOG_DATA) public dataProducto: Producto
   ){
     
     this.formProducto = this.fb.group({
@@ -55,6 +55,18 @@ export class ProductoAddEditComponent implements OnInit{
   
   ngOnInit() {
     this.traerTipos();  
+    if(this.dataProducto){
+      this.formProducto.patchValue({
+        nombreCompleto: this.dataProducto.nombre,
+        codTipo: this.dataProducto.codTipo,
+        precio: this.dataProducto.precio,
+        stock: this.dataProducto.stock,
+        descripcion: this.dataProducto.descripcion
+      })
+      this.tituloAccion="Editar"
+      this.botonAccion="Actualizar"
+    }
+    
   }
 
   applyFilter(event: Event) {
@@ -87,14 +99,28 @@ export class ProductoAddEditComponent implements OnInit{
       ventas: 0,
       codTipo: this.formProducto.value.codTipo
     }
-    this._productoServicio.add(prod).subscribe({
-      next:(data) =>{
-        this.mostrarAlerta("Producto cargado al sistema exitosamente","Listo");
-        this.dialogoReferencia.close("Creado");
-      },error:(e)=>{
-        this.mostrarAlerta("No se ha podido crear el producto","Error");
-      }
-    })
+
+    if(this.dataProducto == null){
+      this._productoServicio.add(prod).subscribe({
+        next:(data) =>{
+          this.mostrarAlerta("Producto cargado al sistema exitosamente","Listo");
+          this.dialogoReferencia.close("Creado");
+        },error:(e)=>{
+          this.mostrarAlerta("No se ha podido crear el producto","Error");
+        }
+      })
+    }else{
+      prod.ventas= this.dataProducto.ventas
+      this._productoServicio.update(this.dataProducto.idProducto,prod).subscribe({
+        next:(data) =>{
+          this.mostrarAlerta("Producto editado correctamente","Listo");
+          this.dialogoReferencia.close("Editado");
+        },error:(e)=>{
+          this.mostrarAlerta("No se ha podido Editar el producto","Error");
+        }
+      })
+    }
+
   }
   selectedValue!: string;
   

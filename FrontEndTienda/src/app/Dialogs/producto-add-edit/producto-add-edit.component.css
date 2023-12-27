@@ -11,3 +11,8 @@ mat-form-field {
   width: 100%; /* Ajusta el ancho del campo al 100% del contenedor */
   margin: 16px; /* Añade espacio entre los campos, ajusta según sea necesario */
 }
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* Una columna */
+  gap: 16px; /* Espacio entre los elementos */
+}

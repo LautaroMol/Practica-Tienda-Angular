@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TipoService } from '../Services/tipo.service';
 import { Tipo } from '../interfaces/tipo';
 import { CommonModule } from '@angular/common';
+import { TipoAddEditComponent } from '../Dialogs/tipo-add-edit/tipo-add-edit.component';
 
 
 @Component({
@@ -34,14 +35,17 @@ export class ReposicionComponent implements AfterViewInit, OnInit {
   }
   displayedColumns: string[] = ['Nombre', 'Precio', 'Stock', 'Descripcion','Ventas','Codigo de categoria','Categoria','Acciones'];
   dataSource = new MatTableDataSource<Producto>();
+  dataSourceTipo = new MatTableDataSource<Tipo>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('paginatorTipo') paginatorTipo!: MatPaginator; // Asi se asigna un nombre uno al paginator
 
   @Input() producto: Producto;
   listaProductos: Producto[] =[];
   listaCategorias: Tipo[] =[];
   ngOnInit() {
     this.mostrarProductos();
+    this.mostrarCategorias();
   }
 
 
@@ -54,9 +58,25 @@ export class ReposicionComponent implements AfterViewInit, OnInit {
     })
   }
 
+  mostrarCategorias(){
+    this._tipoServicio.getList().subscribe({
+      next: (data) => {
+        this.listaCategorias = data;
+        this.dataSourceTipo.data = data;
+      },
+      error: (e) => {
+        console.log(e);
+      },
+    });
+  }
+
   ngAfterViewInit() {
     this.mostrarProductos();
+    this.mostrarCategorias();
+    this.dataSource.paginator = this.paginator;
+    this.dataSourceTipo.paginator = this.paginatorTipo;
   }
+  
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -64,6 +84,13 @@ export class ReposicionComponent implements AfterViewInit, OnInit {
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+  applyFilterTipo(event: Event){
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceTipo.filter = filterValue.trim().toLocaleLowerCase();
+    if (this.dataSourceTipo.paginator){
+      this.dataSourceTipo.paginator.firstPage();
     }
   }
 
@@ -77,8 +104,43 @@ export class ReposicionComponent implements AfterViewInit, OnInit {
       }
     });
   }
+  DialogoNuevaCategoria(){
+    this.dialog.open(TipoAddEditComponent,{
+      disableClose:true,
+      width:"400px"
+    }).afterClosed().subscribe(resultado =>{
+      if(resultado ==="Creado"){
+        this.mostrarCategorias();
+      }
+    });
+  }
 
-  editarProducto(){}
+  DialogoEditarProducto(dataProducto: Producto) {
+    this.dialog.open(ProductoAddEditComponent,{
+      disableClose:true,
+      width:"400px",
+      data: dataProducto
+    }).afterClosed().subscribe(resultado =>{
+      if(resultado ==="Editado"){
+        this.mostrarProductos();
+      }
+    });
+  }
 
-  cancelarEdicion(){}
+
+  dialogoBorrarProducto(){}
+
+  editarCategoria(dataCategoria: Tipo) {
+    this.dialog.open(TipoAddEditComponent,{
+      disableClose:true,
+      width:"400px",
+      data: dataCategoria
+    }).afterClosed().subscribe(resultado =>{
+      if(resultado ==="Editado"){
+        this.mostrarCategorias();
+      }
+    });
+  }
+
+  cancelarEdicionCategoria(){}
 }
