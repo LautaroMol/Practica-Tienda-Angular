@@ -14,13 +14,15 @@ import { TipoService } from '../Services/tipo.service';
 import { Tipo } from '../interfaces/tipo';
 import { CommonModule } from '@angular/common';
 import { TipoAddEditComponent } from '../Dialogs/tipo-add-edit/tipo-add-edit.component';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DeleteProductoComponent } from '../Dialogs/delete-producto/delete-producto.component';
+import { DeleteTipoComponent } from '../Dialogs/delete-tipo/delete-tipo.component';
 
 @Component({
   selector: 'app-reposicion',
   standalone: true,
   imports: [MatTableModule, MatPaginatorModule,MatFormFieldModule,MatInputModule,HttpClientModule,MatIconModule,MatDialogActions,
-    MatDialogClose,MatDialogContent,MatDialogTitle,MatButtonModule,CommonModule],
+    MatDialogClose,MatDialogContent,MatDialogTitle,MatButtonModule,CommonModule,DeleteProductoComponent],
   templateUrl: './reposicion.component.html',
   styleUrl: './reposicion.component.css'
 })
@@ -29,7 +31,7 @@ export class ReposicionComponent implements AfterViewInit, OnInit {
     private _productoServicio: ProductoService,
     public dialog: MatDialog,
     private _tipoServicio: TipoService,
-    
+    private _snackBar: MatSnackBar
   ){
     this.producto = {} as Producto;
   }
@@ -127,8 +129,30 @@ export class ReposicionComponent implements AfterViewInit, OnInit {
     });
   }
 
+  mostrarAlerta(msg: string, accion: string) {
+    this._snackBar.open(msg, accion,{
+      horizontalPosition:"end",
+      verticalPosition:"top",
+      duration: 3000
+    });
+  }
 
-  dialogoBorrarProducto(){}
+  dialogoBorrarProducto(dataProducto: Producto) {
+    this.dialog.open(DeleteProductoComponent,{
+      disableClose:true,
+      width:"400px",
+      data: dataProducto
+    }).afterClosed().subscribe(resultado =>{
+      if(resultado ==="Eliminar"){
+        this._productoServicio.delete(dataProducto.idProducto).subscribe({
+          next:(data) =>{
+            this.mostrarAlerta("Producto Borrado", "Listo");
+            this.mostrarProductos();
+          },error:(e) =>{}
+        })
+      }
+    });
+  }
 
   editarCategoria(dataCategoria: Tipo) {
     this.dialog.open(TipoAddEditComponent,{
@@ -142,5 +166,20 @@ export class ReposicionComponent implements AfterViewInit, OnInit {
     });
   }
 
-  cancelarEdicionCategoria(){}
+  dialogoBorrarCategoria(dataCategoria: Tipo){
+    this.dialog.open(DeleteTipoComponent,{
+      disableClose:true,
+      width:"400px",
+      data: dataCategoria
+    }).afterClosed().subscribe(resultado =>{
+      if(resultado ==="Eliminar"){
+        this._tipoServicio.delete(dataCategoria.idTipo).subscribe({
+          next:(data) =>{
+            this.mostrarAlerta("Categoria Borrada", "Listo");
+            this.mostrarCategorias();
+          },error:(e) =>{}
+        })
+      }
+    });
+  }
 }

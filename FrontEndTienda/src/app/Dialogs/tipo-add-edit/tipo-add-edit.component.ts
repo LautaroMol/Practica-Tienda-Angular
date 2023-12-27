@@ -12,9 +12,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-import { CommonModule } from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-tipo-add-edit',
