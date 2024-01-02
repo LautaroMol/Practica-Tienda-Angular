@@ -75,7 +75,7 @@ app.MapGet("producto/lista", async (
 });
 
 app.MapPost("tipo/guardar", async (
-    TipoDTO tipoDTO,
+    Tipo tipoDTO,
     ITipoService _tipoService,
     IMapper _mapper) => {
         var _tipo = _mapper.Map<Tipo>(tipoDTO);

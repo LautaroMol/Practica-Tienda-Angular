@@ -1,0 +1,60 @@
+/* Estilos para la tarjeta de producto */
+.product-card {
+    max-width: 400px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Contenedor principal */
+  .main-container {
+    display: flex;
+    gap: 16px;
+  }
+  
+  /* Columna de categorías */
+  .category-column {
+    background-color: #e6f7ff;
+    padding: 16px;
+    width: 200px;
+  }
+  
+  /* Estilos para los botones */
+  .mat-icon-button,
+  .mat-button,
+  .mat-raised-button {
+    background-color: #03a9f4;
+    color: white;
+    margin-top: 10px;
+  }
+  
+  /* Estilos para la lista de categorías */
+  mat-radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #03a9f4;
+    padding: 10px;
+  }
+  
+  mat-radio-button {
+    margin-bottom: 8px;
+    color: white;
+  }
+  
+  /* Estilos adicionales para la cantidad y los botones en la tarjeta */
+  .cant {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .quantity-input {
+    width: 40px;
+    text-align: center;
+    margin: 0 5px;
+  }
+  

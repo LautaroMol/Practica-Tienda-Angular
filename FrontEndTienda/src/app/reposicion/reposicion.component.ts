@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, ViewChild, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, ViewChild, OnInit, Inject} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -17,6 +17,8 @@ import { TipoAddEditComponent } from '../Dialogs/tipo-add-edit/tipo-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteProductoComponent } from '../Dialogs/delete-producto/delete-producto.component';
 import { DeleteTipoComponent } from '../Dialogs/delete-tipo/delete-tipo.component';
+import { Router } from '@angular/router';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-reposicion',
@@ -31,10 +33,13 @@ export class ReposicionComponent implements AfterViewInit, OnInit {
     private _productoServicio: ProductoService,
     public dialog: MatDialog,
     private _tipoServicio: TipoService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private router: Router,
+    private appComponent: AppComponent
   ){
     this.producto = {} as Producto;
   }
+
   displayedColumns: string[] = ['Nombre', 'Precio', 'Stock', 'Descripcion','Ventas','Codigo de categoria','Categoria','Acciones'];
   dataSource = new MatTableDataSource<Producto>();
   dataSourceTipo = new MatTableDataSource<Tipo>();
@@ -181,5 +186,10 @@ export class ReposicionComponent implements AfterViewInit, OnInit {
         })
       }
     });
+  }
+  showCards = false;
+  volverMenu(){
+    this.appComponent.showCards = true;
+    this.router.navigate(['/']);
   }
 }

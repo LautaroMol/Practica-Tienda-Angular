@@ -1,6 +1,6 @@
 
 
-<div class="button-container">
+<div class="button-container" *ngIf="showCards">
   <div class="card-container">
     <mat-card class="cardBut" id="animatedCard" (click)="navigateTo('/venta')">
       <img src="../assets/icons8-cart.gif" id="animatedIcon" class="hidden">

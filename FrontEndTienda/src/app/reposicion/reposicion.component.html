@@ -1,4 +1,7 @@
 <div style="width: 70%; margin: 40px auto;">
+  <button mat-raised-button class="custom-green-button" (click)="volverMenu()">
+    Volver al Menú
+  </button>
     <h1>Lista Para reponer stock</h1>
     <button mat-button (click)="DialogoNuevoProducto()">Cargar Nuevo Producto</button>
 
@@ -75,9 +78,6 @@
       </table>
       <mat-paginator [pageSizeOptions]="[5, 10, 20,3]"
       showFirstLastButtons aria-label="Seleccione la pagina de productos"></mat-paginator>
-
-
-          <button mat-button (click)="DialogoNuevaCategoria()">Agregar Nueva Categoría</button>
 
           <div class="mat-elevation-z8" style="margin-top: 20px;">
             <mat-form-field>
