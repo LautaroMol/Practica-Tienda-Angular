@@ -13,12 +13,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import {MatExpansionModule} from '@angular/material/expansion'; 
 
 @Component({
   selector: 'app-venta',
   standalone: true,
   imports: [MatRadioModule,FormsModule,MatFormFieldModule,MatIconModule,CommonModule,MatInputModule,MatGridListModule,MatListModule,MatCardModule
-    ,MatButtonModule],
+    ,MatButtonModule,MatExpansionModule],
   templateUrl: './venta.component.html',
   styleUrl: './venta.component.css'
 })
@@ -29,56 +30,30 @@ export class VentaComponent implements OnInit {
     private _productoServicio: ProductoService,){}
     listaProductos: Producto[] = [];
     listaCategorias: Tipo[] = [];
-    carrito: { producto: Producto; cantidad: number }[] = [];
+    carrito: Producto[] = [];
     selectedCategory: number | null = null;
     filteredProducts: Producto[] = [];
-    cantidad: number = 0;
 
   
   ngOnInit() {
     this.mostrarProductos();
     this.mostrarCategorias();
-    console.log(this.listaProductos);
-    this._productoServicio.getList().subscribe({
-      next: (data) => {
-        this.listaProductos = data;
-        console.log(this.listaProductos);
-      },
-      error: (e) => {
-        console.error(e);
-      },
-    });
-    console.log(this.listaProductos);
   }
 
-  agregarAlCarrito(producto: Producto, cantidad: number) {
-  let cantidadSeleccionada = cantidad;
+  agregarAlCarrito(producto: Producto) {
+    const productoExistente = this.carrito.find(p => p.idProducto === producto.idProducto);
 
-  if (cantidadSeleccionada <= producto.stock) {
-    const itemEnCarrito = this.carrito.find(item => item.producto.idProducto === producto.idProducto);
-
-    if (itemEnCarrito) {
-      itemEnCarrito.cantidad += cantidadSeleccionada;
-    } else {
-      this.carrito.push({ producto, cantidad: cantidadSeleccionada });
-    }
-
-    producto.stock -= cantidadSeleccionada;
-
-    cantidadSeleccionada = 1
+  if (productoExistente) {
+    productoExistente.ventas += producto.ventas;
   } else {
-    console.error('Cantidad seleccionada excede el stock disponible');
+    const productoClonado = { ...producto };
+    this.carrito.push(productoClonado);
     }
   }
 
-  incrementQuantity(): void {
-    this.cantidad++;
-  }
-
-  decrementQuantity(): void {
-    if (this.cantidad > 1) {
-      this.cantidad--;
-    }
+  carritoVisible: boolean = false;
+  toggleCarrito() {
+    this.carritoVisible = !this.carritoVisible;
   }
 
   mostrarProductos() {

@@ -7,21 +7,41 @@
         </mat-radio-button>
       </mat-radio-group>
     </div>
-  
-    <mat-grid-list cols="2" >
-        <mat-card *ngFor="let product of listaProductos" class="product-card">
+    
+    <div class="carrito">
+      <div class="carrito-icon" (click)="toggleCarrito()">
+        <mat-icon>shopping_cart</mat-icon>
+      </div>
+      <div class="carrito-contenido" [class.show]="carritoVisible">
+        <mat-list *ngIf="carrito.length > 0; else noItems">
+          <mat-list-item *ngFor="let prod of carrito">
+            <div matLine style="height: 14px;">*{{ prod.nombre }}</div>
+            <div matLine>Cantidad: {{ prod.ventas }}</div>
+            <hr>
+          </mat-list-item>
+        </mat-list>
+        <ng-template #noItems>No hay productos en el carrito.</ng-template>
+      </div>
+    </div>
+
+
+    <title>Lista de Productos</title>
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-card *ngFor="let product of listaProductos" class="product-card">
             <mat-card-header>
               <mat-card-title>{{ product.nombre }}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
               <p>{{ product.descripcion }}</p>
-              <p>Precio: {{ product.precio }}</p>
+              <p>Precio: {{ product.precio }} $</p>
               <mat-form-field>
-                <input matInput type="number" placeholder="Cantidad" [(ngModel)]="cantidad" min="1" max="{{ product.stock }}">
+                <input matInput type="number" min="1" [max]="product.stock"
+       placeholder="Cantidad Máxima: {{product.stock}}" [ngModel]="1" (ngModelChange)="product.ventas = $event">
+                <span matSuffix>Cantidad máxima: {{ product.stock }}</span>
               </mat-form-field>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-button (click)="agregarAlCarrito(product, cantidad)">Agregar al carrito</button>
+              <button mat-button (click)="agregarAlCarrito(product)">Agregar al carrito</button>
             </mat-card-actions>
-          </mat-card>
+      </mat-card>
     </mat-grid-list>
