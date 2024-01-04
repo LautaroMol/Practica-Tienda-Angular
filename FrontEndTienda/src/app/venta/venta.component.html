@@ -1,12 +1,16 @@
 <div class="main-container">
-    <div class="category-column">
-      <mat-radio-group [(ngModel)]="selectedCategory" class="category-list">
-        <mat-radio-button [value]="null">Todos los productos</mat-radio-button>
-        <mat-radio-button *ngFor="let category of listaCategorias" [value]="category.codTipo">
-          {{ category.nombre }}
-        </mat-radio-button>
-      </mat-radio-group>
-    </div>
+  <div class="category-column">
+    <mat-radio-group [(ngModel)]="selectedCategory" class="category-list" (change)="filtrarProductosPorCategoria()">
+      <mat-radio-button [value]="null">Todos los productos</mat-radio-button>
+      <mat-radio-button *ngFor="let category of listaCategorias" [value]="category.codTipo">
+        {{ category.nombre }}
+      </mat-radio-button>
+    </mat-radio-group>
+    <button mat-raised-button class="custom-green-button" (click)="volverMenu()">
+      Volver al Menú
+    </button>
+  </div>
+  
     
     <div class="carrito">
       <div class="carrito-icon" (click)="toggleCarrito()">
@@ -15,33 +19,40 @@
       <div class="carrito-contenido" [class.show]="carritoVisible">
         <mat-list *ngIf="carrito.length > 0; else noItems">
           <mat-list-item *ngFor="let prod of carrito">
-            <div matLine style="height: 14px;">*{{ prod.nombre }}</div>
+            <div matLine style="display: flex; align-items: center; ">
+              <button mat-icon-button color="warn"  (click)="eliminarProductoDelCarrito(prod)">
+                <mat-icon style="height: 14px; font-size: large;">cancel</mat-icon>
+              </button>
+              <span style="margin-left: 8px; height: 10px;">{{ prod.nombre }}</span>
+            </div>
             <div matLine>Cantidad: {{ prod.ventas }}</div>
             <hr>
           </mat-list-item>
         </mat-list>
         <ng-template #noItems>No hay productos en el carrito.</ng-template>
+        <button mat-flat-button color="primary" (click)="registrarVenta(carrito)">Finalizar Compra</button>
       </div>
     </div>
-
+    
 
     <title>Lista de Productos</title>
-    <mat-grid-list cols="2" rowHeight="2:1">
-      <mat-card *ngFor="let product of listaProductos" class="product-card">
-            <mat-card-header>
-              <mat-card-title>{{ product.nombre }}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <p>{{ product.descripcion }}</p>
-              <p>Precio: {{ product.precio }} $</p>
-              <mat-form-field>
-                <input matInput type="number" min="1" [max]="product.stock"
-       placeholder="Cantidad Máxima: {{product.stock}}" [ngModel]="1" (ngModelChange)="product.ventas = $event">
-                <span matSuffix>Cantidad máxima: {{ product.stock }}</span>
-              </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-button (click)="agregarAlCarrito(product)">Agregar al carrito</button>
-            </mat-card-actions>
+    <mat-grid-list [cols]="(selectedCategory === null ? listaProductos : filteredProducts).length % 2 === 0 ? 2 : 1" rowHeight="2:1">
+      <mat-card *ngFor="let product of (selectedCategory === null ? listaProductos : filteredProducts)" class="product-card">
+        <mat-card-header>
+          <mat-card-title>{{ product.nombre }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ product.descripcion }}</p>
+          <p>Precio: {{ product.precio }} $</p>
+          <mat-form-field>
+            <input matInput type="number" min="1" [max]="product.stock"
+              placeholder="Cantidad Máxima: {{product.stock}}" [ngModel]="1" (ngModelChange)="product.ventas = $event">
+            <span matSuffix>Cantidad máxima: {{ product.stock }}</span>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="agregarAlCarrito(product)">Agregar al carrito</button>
+        </mat-card-actions>
       </mat-card>
     </mat-grid-list>
+    

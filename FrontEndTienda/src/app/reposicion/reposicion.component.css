@@ -11,14 +11,14 @@ table {
   }
   .example-button-container {
     display: flex;
-    gap: 8px; /* Ajusta el espacio entre los botones según sea necesario */
+    gap: 8px;
   }
   
   .action-button {
-    background-color: transparent !important; /* Elimina el fondo del cuadro del botón */
-    box-shadow: none !important; /* Elimina la sombra del cuadro del botón */
+    background-color: transparent !important; 
+    box-shadow: none !important;
     border: none;
-    transition: transform 0.2s; /* Agrega una transición */
+    transition: transform 0.2s;
 
   /* Escala normal */
   transform: scale(1);
@@ -29,11 +29,11 @@ table {
 }
 
 .custom-green-button {
-  background-color: #4CAF50 !important; /* Verde */
-  color: white !important; /* Texto blanco */
-  transition: background-color 0.3s ease; /* Animación de cambio de color */
+  background-color: #4CAF50 !important; 
+  color: white !important; 
+  transition: background-color 0.3s ease; 
 }
 
 .custom-green-button:hover {
-  background-color: #45a049 !important; /* Color más claro al poner el cursor encima */
+  background-color: #45a049 !important; 
 }

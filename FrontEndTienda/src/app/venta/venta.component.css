@@ -1,4 +1,3 @@
-/* Estilos para la tarjeta de producto */
 .product-card {
   max-width: 600px;
   background-color: #ffffff;
@@ -11,43 +10,38 @@
   height: auto;
 }
   
-  /* Contenedor principal */
   .main-container {
     display: flex;
     gap: 16px;
   }
   
-  /* Columna de categorías */
   .category-column {
-    background-color: #e6f7ff;
+    background-color: #ffffff;
     padding: 16px;
     width: 200px;
   }
   
-  /* Estilos para los botones */
   .mat-icon-button,
   .mat-button,
   .mat-raised-button {
-    background-color: #03a9f4;
+    background-color: #ffffff;
     color: white;
     margin-top: 10px;
   }
   
-  /* Estilos para la lista de categorías */
   mat-radio-group {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    background-color: #03a9f4;
+    background-color: #ffffff;
     padding: 10px;
   }
   
   mat-radio-button {
     margin-bottom: 8px;
-    color: white;
+    color: rgb(151, 151, 151);
   }
   
-  /* Estilos adicionales para la cantidad y los botones en la tarjeta */
   .cant {
     display: flex;
     align-items: center;
@@ -60,10 +54,6 @@
     margin: 0 5px;
   }
   
-  .mat-grid-list{
-    columns: 2;
-  }
-
 
   .carrito {
     position: relative;
@@ -96,4 +86,22 @@
     border-bottom: 1px solid #ddd;
     display: flex;
     align-items: flex-start;
+  }
+  .mat-list-item {
+    font-size: 14px; 
+    padding: 10px; 
+  }
+  
+  .mat-list {
+    font-size: 18px;
+  }
+
+  .custom-green-button {
+    background-color: #4CAF50 !important; /* Verde */
+    color: white !important; /* Texto blanco */
+    transition: background-color 0.3s ease; /* Animación de cambio de color */
+  }
+  
+  .custom-green-button:hover {
+    background-color: #45a049 !important; /* Color más claro al poner el cursor encima */
   }
